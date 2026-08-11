@@ -1,5 +1,3 @@
-from dataclasses import dataclass
-from enum import Enum
 import math
 from qpt.instruments.european_option import EuropeanOption, OptionType
 from qpt.models.market_data import MarketData
