@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "quant-pricing-toolkit"
+version = "0.1.0"
+description = "A Python toolkit for derivatives pricing, volatility calibration, and portfolio risk (VaR/CVaR)."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Ines", email = "ines.tagliaferri@orange.fr" }
+]
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "pandas>=2.1",
+    "matplotlib>=3.8",
+    "yfinance>=0.2.40",
+]
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "black>=24.0",
+    "ruff>=0.5",
+]
+[tool.setuptools.packages.find]
+where = ["src"]
