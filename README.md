@@ -18,6 +18,18 @@ source venv/bin/activate  # or venv\Scripts\activate on Windows
 pip install -e ".[dev]"
 ```
 
+## Pricing methods
+
+Four independent pricing methods are implemented and cross-validated against each other 
+(all converge to the same Black-Scholes value for a European option):
+
+| Method | European options | American options | Notes |
+|---|---|---|---|
+| Black-Scholes (closed-form) | ✅ | ❌ | Instant, exact under model assumptions |
+| Binomial tree (CRR) | ✅ | ✅ | Converges to Black-Scholes as `n_steps` increases |
+| Monte Carlo | ✅ | ❌ | Includes antithetic variates for variance reduction |
+| PDE (Crank-Nicolson) | ✅ | ❌ | Finite-difference solution of the Black-Scholes PDE |
+
 ### Black-Scholes pricing (closed-form)
 
 Analytical pricing for European call/put options.
@@ -48,6 +60,29 @@ put = EuropeanOption(strike=110, maturity=1.0, option_type=OptionType.PUT)
 american_price = binomial_tree_price(put, market, n_steps=200, american=True)
 ```
 
+### Monte Carlo pricing
+
+Simulation-based pricing with optional antithetic variates for variance reduction. 
+Returns both the price estimate and its standard error.
+
+```python
+from qpt.pricing.monte_carlo import monte_carlo_price
+
+price, stderr = monte_carlo_price(call, market, n_paths=100_000, antithetic=True, seed=42)
+# price ~10.45, stderr gives the statistical confidence of the estimate
+```
+
+### PDE pricing (Crank-Nicolson)
+
+Finite-difference solution of the Black-Scholes partial differential equation, 
+using a Crank-Nicolson scheme (unconditionally stable, second-order accurate).
+
+```python
+from qpt.pricing.pde import pde_price
+
+price = pde_price(call, market, M=200, N=200)  # ~10.44
+```
+
 ## Running tests
 
 ```bash
@@ -58,8 +93,8 @@ pytest tests/ -v
 
 - [x] Black-Scholes closed-form pricing
 - [x] Binomial tree pricing (European & American)
-- [ ] Monte Carlo pricing with variance reduction
-- [ ] Finite difference (PDE) pricing
+- [X] Monte Carlo pricing with variance reduction
+- [X] Finite difference (PDE) pricing
 - [ ] Analytical & numerical Greeks
 - [ ] Volatility surface calibration (real market data)
 - [ ] Risk metrics: VaR, CVaR, backtesting
