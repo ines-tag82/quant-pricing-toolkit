@@ -1,7 +1,5 @@
 # Quant Pricing Toolkit
 
-![Tests](https://github.com/ines-tag82/quant-pricing-toolkit/actions/workflows/test.yml/badge.svg)
-
 A Python toolkit for derivatives pricing, volatility calibration, and portfolio risk (VaR/CVaR)
 
 ## Overview
