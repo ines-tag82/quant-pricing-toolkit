@@ -16,8 +16,9 @@ def fetch_option_chain(ticker: str, max_expiries: int = 3) -> pd.DataFrame:
     result = pd.DataFrame(all_data)
     return result
 
-df = fetch_option_chain("AAPL", max_expiries=2)
-print(df.head())
-print(df.tail())
-print(df.shape)
-print(df["expiry"].unique())
+if __name__ == "__main__":
+    df = fetch_option_chain("AAPL", max_expiries=2)
+    print(df.head())
+    print(df.tail())
+    print(df.shape)
+    print(df["expiry"].unique())

@@ -40,11 +40,12 @@ def rho_put(option: EuropeanOption, market: MarketData) -> float:
     d1, d2 = d1_d2(option, market)
     return -option.strike * option.maturity * np.exp(-market.rate * option.maturity) * norm.cdf(-d2)
 
-market = MarketData(spot=100, rate=0.05, volatility=0.20)
-call = EuropeanOption(strike=100, maturity=1.0, option_type=OptionType.CALL)
-
-print(delta_call(call, market))   # ~0.6368
-print(gamma(call, market))        # ~0.0188
-print(vega(call, market))         # ~37.52
-print(theta_call(call, market))   # ~-6.41
-print(rho_call(call, market))     # ~53.23
+if __name__ == "__main__":
+    market = MarketData(spot=100, rate=0.05, volatility=0.20)
+    call = EuropeanOption(strike=100, maturity=1.0, option_type=OptionType.CALL)
+    
+    print(delta_call(call, market))   # ~0.6368
+    print(gamma(call, market))        # ~0.0188
+    print(vega(call, market))         # ~37.52
+    print(theta_call(call, market))   # ~-6.41
+    print(rho_call(call, market))     # ~53.23

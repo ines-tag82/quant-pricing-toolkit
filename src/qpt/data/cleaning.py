@@ -14,9 +14,10 @@ def clean_option_chain(df: pd.DataFrame, min_price: float = 0.05, max_bid_ask_sp
         print("⚠️ Warning: no options remain after cleaning. Consider relaxing the filter thresholds.")
     return result
 
-df_raw = fetch_option_chain("AAPL", max_expiries=8)
-df_clean = clean_option_chain(df_raw)
+if __name__ == "__main__":
+    df_raw = fetch_option_chain("AAPL", max_expiries=8)
+    df_clean = clean_option_chain(df_raw)
 
-print("Avant nettoyage:", df_raw.shape)
-print("Après nettoyage:", df_clean.shape)
-print(df_clean[["strike", "option_price", "days_to_expiry"]].describe())
+    print("Avant nettoyage:", df_raw.shape)
+    print("Après nettoyage:", df_clean.shape)
+    print(df_clean[["strike", "option_price", "days_to_expiry"]].describe())

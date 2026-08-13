@@ -21,17 +21,18 @@ def numerical_vega(pricing_func: Callable, option: EuropeanOption, market: Marke
     market_down = replace(market, volatility=market.volatility - eps)
     return (pricing_func(option, market_up) - pricing_func(option, market_down)) / (2 * eps)
 
-market = MarketData(spot=100, rate=0.05, volatility=0.20)
-call = EuropeanOption(strike=100, maturity=1.0, option_type=OptionType.CALL)
+if __name__ == "__main__":
+    market = MarketData(spot=100, rate=0.05, volatility=0.20)
+    call = EuropeanOption(strike=100, maturity=1.0, option_type=OptionType.CALL)
 
-num_delta = numerical_delta(black_scholes_price, call, market)
-ana_delta = delta_call(call, market)
-print(num_delta, ana_delta)  # must be very close (~0.6368 both)
+    num_delta = numerical_delta(black_scholes_price, call, market)
+    ana_delta = delta_call(call, market)
+    print(num_delta, ana_delta)  # must be very close (~0.6368 both)
 
-num_gamma = numerical_gamma(black_scholes_price, call, market)
-ana_gamma = gamma(call, market)
-print(num_gamma, ana_gamma)  # must be very close (~0.0188)
+    num_gamma = numerical_gamma(black_scholes_price, call, market)
+    ana_gamma = gamma(call, market)
+    print(num_gamma, ana_gamma)  # must be very close (~0.0188)
 
-num_vega = numerical_vega(black_scholes_price, call, market)
-ana_vega = vega(call, market)
-print(num_vega, ana_vega)  # must be very close (~37.52)
+    num_vega = numerical_vega(black_scholes_price, call, market)
+    ana_vega = vega(call, market)
+    print(num_vega, ana_vega)  # must be very close (~37.52)

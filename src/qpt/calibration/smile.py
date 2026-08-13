@@ -16,10 +16,10 @@ def compute_smile(df: pd.DataFrame, rate: float = 0.05) -> pd.DataFrame:
     result["implied_vol"] = implied_vols
     return result
 
+if __name__ == "__main__":
+    df_raw = fetch_option_chain("AAPL", max_expiries=8)
+    df_clean = clean_option_chain(df_raw)
+    df_smile = compute_smile(df_clean)
 
-df_raw = fetch_option_chain("AAPL", max_expiries=8)
-df_clean = clean_option_chain(df_raw)
-df_smile = compute_smile(df_clean)
-
-print(df_smile[["strike", "days_to_expiry", "option_price", "implied_vol"]].head(15))
-print(df_smile["implied_vol"].describe())
+    print(df_smile[["strike", "days_to_expiry", "option_price", "implied_vol"]].head(15))
+    print(df_smile["implied_vol"].describe())

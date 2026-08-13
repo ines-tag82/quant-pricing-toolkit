@@ -50,9 +50,10 @@ def pde_price(option: EuropeanOption, market: MarketData, M: int = 200, N: int =
     price = np.interp(market.spot, S_grid, V)
     return price
 
-market = MarketData(spot=100, rate=0.05, volatility=0.20)
-call = EuropeanOption(strike=100, maturity=1.0, option_type=OptionType.CALL)
-put = EuropeanOption(strike=100, maturity=1.0, option_type=OptionType.PUT)
+if __name__ == "__main__":
+    market = MarketData(spot=100, rate=0.05, volatility=0.20)
+    call = EuropeanOption(strike=100, maturity=1.0, option_type=OptionType.CALL)
+    put = EuropeanOption(strike=100, maturity=1.0, option_type=OptionType.PUT)
 
-print(pde_price(call, market, M=200, N=200))  # must be close to 10.45
-print(pde_price(put, market, M=200, N=200))   # must be close to 5.57
+    print(pde_price(call, market, M=200, N=200))  # must be close to 10.45
+    print(pde_price(put, market, M=200, N=200))   # must be close to 5.57
