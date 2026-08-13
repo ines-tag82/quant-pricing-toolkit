@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.stats import norm
+from scipy.stats import chi2
 
 
 def historical_var(returns: np.ndarray, portfolio_value: float, confidence_level: float = 0.95) -> float:
@@ -31,6 +32,20 @@ def historical_cvar(returns: np.ndarray, portfolio_value: float, confidence_leve
     mean_extreme_loss = np.mean(pnl_extreme)
     return -mean_extreme_loss
 
+def kupiec_test(returns: np.ndarray, var_estimate: float, portfolio_value: float, confidence_level: float = 0.95) -> dict:
+    N = len(returns)
+    pnl = returns * portfolio_value
+    exceptions = pnl < -var_estimate
+    exceptions_count = np.sum(exceptions)
+    exception_rate = exceptions_count / N
+    expected_rate = 1 - confidence_level
+    if exceptions_count == 0 or exceptions_count == N:
+        lr_statistic = 0.0
+    else:
+        lr_statistic = -2*np.log(((1 - expected_rate) ** (N - exceptions_count) * (expected_rate ** exceptions_count)) / ((1 - exception_rate) ** (N - exceptions_count) * (exception_rate ** exceptions_count)))
+    p_value = 1 - chi2.cdf(lr_statistic, df=1)
+    return {"n_exceptions": exceptions_count, "exception_rate": exception_rate, "expected_rate": expected_rate, "lr_statistic": lr_statistic, "p_value": p_value}
+
 if __name__ == "__main__":
     np.random.seed(42)
     # Simulate 1000 days of returns, mean 0.0005, std 0.02 (typical for a stock)
@@ -55,3 +70,8 @@ if __name__ == "__main__":
     cvar_95 = historical_cvar(returns, portfolio_value, confidence_level=0.95)
     print(f"Historical CVaR 95%: {cvar_95:.2f}")
     print(f"(should be >= VaR 95% = {var_95:.2f})")
+
+    kupiec_result = kupiec_test(returns, var_95, portfolio_value, confidence_level=0.95)
+    print("Kupiec test results:")
+    for key, value in kupiec_result.items():
+        print(f"  {key}: {value}")
