@@ -8,6 +8,10 @@ This project implements multiple option pricing methods (closed-form, tree-based
 computes option Greeks, calibrates volatility surfaces to real market data, and provides portfolio 
 risk metrics (VaR/CVaR) with statistical backtesting.
 
+## Motivation : Why this project
+
+I built this project to get a head start on my Master's in Mathematics & Finance at Imperial College London and to gain hands-on exposure to real-world quantitative research.
+
 ## Contents
 
 - [Pricing methods](#pricing-methods)
@@ -17,10 +21,6 @@ risk metrics (VaR/CVaR) with statistical backtesting.
 - [End-to-end example](#end-to-end-example)
 - [Repository structure](#repository-structure)
 - [Limitations & future work](#limitations--future-work)
-
-## Motivation : Why this project
-
-I built this project to get a head start on my Master's in Mathematics & Finance at Imperial College London and to gain hands-on exposure to real-world quantitative research.
 
 ## Key results
 
@@ -241,6 +241,7 @@ Continuous integration runs the full test suite automatically on every push via 
 
 ## Repository structure
 
+```text
 quant-pricing-toolkit/
 ├── src/qpt/
 │   ├── instruments/      # option definitions (strike, maturity, payoff)
@@ -254,6 +255,7 @@ quant-pricing-toolkit/
 ├── examples/             # standalone runnable scripts, one per phase
 ├── assets/               # generated plots referenced in this README
 └── pyproject.toml
+```
 
 ## Limitations & future work
 
