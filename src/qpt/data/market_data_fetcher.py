@@ -8,11 +8,11 @@ def fetch_option_chain(ticker: str, max_expiries: int = 3) -> pd.DataFrame:
     all_data = []
     dataframe = [stock.option_chain(date).calls for date in expiries_dates]
     for i in range(len(dataframe)):
-        strike, option_price, expiry= dataframe[i]["strike"], dataframe[i]["lastPrice"], expiries_dates[i]
+        strike, option_price, expiry, bid, ask = dataframe[i]["strike"], dataframe[i]["lastPrice"], expiries_dates[i], dataframe[i]["bid"], dataframe[i]["ask"]
         r = pd.to_datetime(expiries_dates[i]) - pd.Timestamp.now()
         days_to_expiry = r.days
         for j in range(len(strike)):
-            all_data.append({"strike": strike.iloc[j], "option_price": option_price.iloc[j], "expiry": expiry, "spot": spot, "days_to_expiry": days_to_expiry})
+            all_data.append({"strike": strike.iloc[j], "option_price": option_price.iloc[j], "expiry": expiry, "spot": spot, "days_to_expiry": days_to_expiry, "bid": bid.iloc[j], "ask": ask.iloc[j]})
     result = pd.DataFrame(all_data)
     return result
 

@@ -23,7 +23,7 @@ market = MarketData(spot=100, rate=0.05, volatility=0.20)
 call = EuropeanOption(strike=100, maturity=1.0, option_type=OptionType.CALL)
 
 price, stderr = monte_carlo_price(call, market, n_paths=100_000, seed=42)
-#print(price, stderr)  # price doit être proche de 10.45 (± quelques centimes), stderr doit être petit (~0.03-0.05)
+#print(price, stderr)  # price must be close to 10.45 (± a few cents), stderr must be small (~0.03-0.05)
 
 price1, err1 = monte_carlo_price(call, market, n_paths=100_000, antithetic=False, seed=42)
 price2, err2 = monte_carlo_price(call, market, n_paths=100_000, antithetic=True, seed=42)

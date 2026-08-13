@@ -26,12 +26,12 @@ call = EuropeanOption(strike=100, maturity=1.0, option_type=OptionType.CALL)
 
 num_delta = numerical_delta(black_scholes_price, call, market)
 ana_delta = delta_call(call, market)
-print(num_delta, ana_delta)  # doivent être très proches (~0.6368 tous les deux)
+print(num_delta, ana_delta)  # must be very close (~0.6368 both)
 
 num_gamma = numerical_gamma(black_scholes_price, call, market)
 ana_gamma = gamma(call, market)
-print(num_gamma, ana_gamma)  # doivent être très proches (~0.0188)
+print(num_gamma, ana_gamma)  # must be very close (~0.0188)
 
 num_vega = numerical_vega(black_scholes_price, call, market)
 ana_vega = vega(call, market)
-print(num_vega, ana_vega)  # doivent être très proches (~37.52)
+print(num_vega, ana_vega)  # must be very close (~37.52)
