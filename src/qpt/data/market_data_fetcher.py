@@ -8,17 +8,15 @@ def fetch_option_chain(ticker: str, max_expiries: int = 3) -> pd.DataFrame:
     all_data = []
     dataframe = [stock.option_chain(date).calls for date in expiries_dates]
     for i in range(len(dataframe)):
-        strike, option_price, expiry, bid, ask = dataframe[i]["strike"], dataframe[i]["lastPrice"], expiries_dates[i], dataframe[i]["bid"], dataframe[i]["ask"]
+        strike, option_price, expiry, bid, ask, volume, open_interest = dataframe[i]["strike"], dataframe[i]["lastPrice"], expiries_dates[i], dataframe[i]["bid"], dataframe[i]["ask"], dataframe[i]["volume"], dataframe[i]["openInterest"]
         r = pd.to_datetime(expiries_dates[i]) - pd.Timestamp.now()
         days_to_expiry = r.days
         for j in range(len(strike)):
-            all_data.append({"strike": strike.iloc[j], "option_price": option_price.iloc[j], "expiry": expiry, "spot": spot, "days_to_expiry": days_to_expiry, "bid": bid.iloc[j], "ask": ask.iloc[j]})
+            all_data.append({"strike": strike.iloc[j], "option_price": option_price.iloc[j], "expiry": expiry, "spot": spot, "days_to_expiry": days_to_expiry, "bid": bid.iloc[j], "ask": ask.iloc[j], "volume": volume.iloc[j], "open_interest": open_interest.iloc[j]})
     result = pd.DataFrame(all_data)
     return result
 
 if __name__ == "__main__":
-    df = fetch_option_chain("AAPL", max_expiries=2)
+    df = fetch_option_chain("AAPL", max_expiries=8)
     print(df.head())
-    print(df.tail())
     print(df.shape)
-    print(df["expiry"].unique())
