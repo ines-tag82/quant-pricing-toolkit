@@ -162,7 +162,7 @@ surface = calibrate_svi_surface(df_smile)
 
 ![SVI calibrated smile](assets/smile_aapl_svi_calibrated.png)
 
-The two expiries with the most strikes (2026-08-21, 2026-09-18) produce smooth curves that closely track the market points, with a negative `rho` recovered for 2026-08-21 (-0.30), consistent with the downward skew typically observed on single-stock equity options. Expiries with fewer strikes fit less well — 2026-08-28 in particular overfits sharply around its outlier point (see [Limitations](#limitations--future-work)).
+The two expiries with the most strikes (2026-08-21, 2026-09-18) produce smooth curves that closely track the market points, with a negative `rho` recovered for 2026-08-21 (-0.30), consistent with the downward skew typically observed on single-stock equity options. Expiries with fewer strikes fit less well, 2026-08-28 in particular overfits sharply around its outlier point (see [Limitations](#limitations--future-work)).
 
 ## Risk management
 
